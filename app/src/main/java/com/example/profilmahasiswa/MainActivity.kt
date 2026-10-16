@@ -92,7 +92,15 @@ fun ProfilMahasiswaApp() {
     var namaInput by rememberSaveable { mutableStateOf("") }
     var nimInput by rememberSaveable { mutableStateOf("") }
     var prodiInput by rememberSaveable { mutableStateOf("") }
-    
+    var prodiExpanded by remember { mutableStateOf(false) }
+
+    val daftarProdi = listOf(
+        "Informatika",
+        "Sistem Informasi",
+        "Teknik Komputer",
+        "Teknologi Informasi",
+        "Sains Data"
+    )
 
     // State Data Profil Tersimpan
     var profilTersimpan by rememberSaveable { mutableStateOf<Mahasiswa?>(null) }
@@ -107,13 +115,13 @@ fun ProfilMahasiswaApp() {
         else -> null
     }
 
-    // 2. NIM: hanya angka, panjang 8 hingga 15 digit
-    val isNimValid = nimInput.trim().length in 8..15 && nimInput.all { it.isDigit() }
+    // 2. NIM: hanya angka, HARUS tepat 7 digit
+    val isNimValid = nimInput.trim().length == 7 && nimInput.all { it.isDigit() }
     val nimError: String? = when {
         nimInput.isEmpty() -> null
         !nimInput.all { it.isDigit() } -> "NIM hanya boleh berisi angka"
-        nimInput.trim().length < 8 -> "NIM minimal 8 digit angka"
-        nimInput.trim().length > 15 -> "NIM maksimal 15 digit angka"
+        nimInput.trim().length < 7 -> "NIM harus tepat 7 digit (saat ini ${nimInput.length} digit)"
+        nimInput.trim().length > 7 -> "NIM harus tepat 7 digit"
         else -> null
     }
 
@@ -721,4 +729,3 @@ fun CardProfilPreview() {
         }
     }
 }
-
